@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { EventPageComponent } from './event-page/event-page.component';
-import {EventComponent} from './shared/components/event/event.component';
+// import {EventComponent} from './shared/components/event/event.component';
 import {SharedModule} from './shared/shared.module';
 
 
@@ -16,7 +16,7 @@ import {SharedModule} from './shared/shared.module';
     MainLayoutComponent,
     HomePageComponent,
     EventPageComponent,
-    EventComponent
+    // EventComponent
   ],
   imports: [
     BrowserModule,

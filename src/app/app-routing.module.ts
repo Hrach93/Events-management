@@ -14,7 +14,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'admin', loadChildren: './admin/admin.module#AdminModule'
+    path: 'user', loadChildren: './admin/admin.module#AdminModule'
   }
 ];
 
