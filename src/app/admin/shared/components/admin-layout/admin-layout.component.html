@@ -1,13 +1,13 @@
 <nav class="navbar bg-primary">
   <h1>
-    <a routerLink="/">Events Management</a>
+    <a>{{fullName}}</a>
   </h1>
-  <ul>
+  <ul *ngIf="auth.isAuthenticated()">
     <li routerLinkActive="active">
-      <a [routerLink]="['/user','dashboard']">Home</a>
+      <a [routerLink]="['/user','dashboard']">Events</a>
     </li>
     <li routerLinkActive="active">
-      <a [routerLink]="['/user', 'create']">Create</a>
+      <a [routerLink]="['/user', 'create']">Create Event</a>
     </li>
     <li>
       <a href="#" (click)="logout($event)">Logout</a>

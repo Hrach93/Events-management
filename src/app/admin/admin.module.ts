@@ -10,6 +10,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from './shared/services/auth.service';
 import {SharedModule} from '../shared/shared.module';
 import {EventComponent} from '../shared/components/event/event.component';
+import {AuthGuard} from './shared/services/auth.guard';
+import {EventsService} from './shared/services/events.service';
 
 @NgModule({
   declarations: [
@@ -30,15 +32,15 @@ import {EventComponent} from '../shared/components/event/event.component';
         path: '', component: AdminLayoutComponent, children: [
           {path: '', redirectTo: '/user/login', pathMatch: 'full'},
           {path: 'login', component: LoginPageComponent},
-          {path: 'dashboard', component: DashboardPageComponent},
-          {path: 'create', component: CreatePageComponent},
-          {path: 'event/:id/edit', component: EditPageComponent}
+          {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard]},
+          {path: 'create', component: CreatePageComponent, canActivate: [AuthGuard]},
+          {path: 'event/:id/edit', component: EditPageComponent, canActivate: [AuthGuard]}
         ]
       }
     ])
   ],
   exports: [RouterModule],
-  providers: [AuthService]
+  providers: [AuthService, AuthGuard, EventsService]
 })
 export class AdminModule{
 

@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
-import { HomePageComponent } from './home-page/home-page.component';
 import { EventPageComponent } from './event-page/event-page.component';
 // import {EventComponent} from './shared/components/event/event.component';
 import {SharedModule} from './shared/shared.module';
@@ -14,7 +13,6 @@ import {SharedModule} from './shared/shared.module';
   declarations: [
     AppComponent,
     MainLayoutComponent,
-    HomePageComponent,
     EventPageComponent,
     // EventComponent
   ],

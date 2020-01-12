@@ -1,33 +1,58 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {User} from '../../../shared/interfaces';
-import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {Observable, Subject, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
+
+  public error$: Subject<string> = new Subject<string>()
+
   constructor(private http: HttpClient) {}
 
   get token(): string {
-    return ''
+    return localStorage.getItem('T-token');
   }
 
+
+
   login(user: User): Observable<any>{
+    user.returnSecureToken = true;
     return this.http.post('https://volo-test.herokuapp.com/login', user)
       .pipe(
-        tap(this.setToken)
-      )
+        tap(this.setToken),
+        catchError(this.handleError.bind(this))
+      );
   }
 
   logout() {
-
+    this.setToken(null);
   }
 
-  isAuthenticaated(): boolean {
-    return !!this.token
+  isAuthenticated(): boolean {
+    return !!this.token;
+  }
+
+  private handleError(error: HttpErrorResponse){
+    const {message} = error.error;
+    console.log(message);
+    this.error$.next(message);
+    return throwError(error);
   }
 
   private setToken(response) {
-    console.log(response);
-  }
+      if (response){
+        localStorage.setItem('T-token', response.token)
+        const {user} = response;
+        localStorage.setItem('user', JSON.stringify({
+          name: user.name,
+          srName: user.srName,
+          isAdmin: user.isAdmin
+        }))
+        console.log('response', response);
+      } else{
+        localStorage.clear();
+      }}
+
 }
