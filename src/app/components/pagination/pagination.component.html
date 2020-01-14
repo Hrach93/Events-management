@@ -1,0 +1,12 @@
+<div class="pagination" *ngIf="totalPages > 1">
+	<span *ngIf="currentPage > 1" class="action green" (click)="prevPage()">Prev</span>
+	<span *ngIf="pagesStartIndex + 1 >= dotsStep" class="dots" (click)="prevDots()">...</span>
+	<span
+		class="item"
+		*ngFor="let page of totalPagesArr | slice:pagesStartIndex:pagesEndIndex"
+		[class.active]="page == currentPage" (click)="setPage(page)">
+		{{ page }}
+	</span>
+	<span *ngIf="pagesEndIndex < totalPages" class="dots" (click)="nextDots()">...</span>
+	<span *ngIf="currentPage !== totalPages" class="action green" (click)="nextPage()">Next</span>
+</div>

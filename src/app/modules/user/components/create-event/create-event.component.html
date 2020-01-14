@@ -1,0 +1,79 @@
+<form class="edit-create-form" [formGroup]="form" (ngSubmit)="submit()">
+  <h1>Create new event</h1>
+
+  <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('name').touched && form.get('name').invalid}"
+  >
+    <label for="title">Event name</label>
+    <input id="title" type="text" formControlName="name">
+    <div
+      *ngIf="form.get('name').touched && form.get('name').invalid"
+      class="validation">
+      <small *ngIf="form.get('name').errors.required">
+        Event name is required
+      </small>
+      <small *ngIf="form.get('name').errors.minlength">
+        Event name must be minimum 3
+      </small>
+      <small *ngIf="form.get('name').errors.maxlength">
+        Event name must be maximum 12
+      </small>
+    </div>
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('eventType').touched && form.get('eventType').invalid}">
+    <label for="type">Event type</label>
+    <select formControlName="eventType" id="type" [(ngModel)]="selected" (ngModelChange)='onOptionsSelected($event)'>
+      <option *ngFor="let type of types" [value]="type.value">{{type.type}} </option>
+    </select>
+    <div
+      *ngIf="form.get('eventType').touched && form.get('eventType').invalid"
+      class="validation">
+      <small *ngIf="form.get('eventType').errors.required">
+        Event type is required
+      </small>
+    </div>
+  </div>
+  <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('date').touched && form.get('date').invalid}">
+    <label for="date">Event Date</label>
+    <input id="date" type="date" [ngModel] ="form.get('date').value | date:'yyyy-MM-dd'" formControlName="date">
+    <div
+      *ngIf="form.get('date').touched && form.get('date').invalid"
+      class="validation">
+      <small *ngIf="form.get('date').errors.required">
+        Event date is required
+      </small>
+    </div>
+  </div>
+  <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('description').touched && form.get('description').invalid}">
+    <label for="description">Event description</label>
+    <input id="description" type="text" formControlName="description">
+    <div
+      *ngIf="form.get('description').touched && form.get('description').invalid"
+      class="validation">
+      <small *ngIf="form.get('description').errors.required">
+        Event description is required
+      </small>
+      <small *ngIf="form.get('description').errors.minlength">
+        Event description must be minimum 30
+      </small>
+      <small *ngIf="form.get('description').errors.maxlength">
+        Event description must be maximum 12
+      </small>
+    </div>
+  </div>
+  <button
+    type="submit"
+    class="btn btn-block btn-dark"
+    [disabled]="form.invalid">
+    <span *ngIf="!editMode">Creat</span>
+    <span *ngIf="editMode">Save</span>
+  </button>
+</form>

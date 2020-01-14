@@ -1,0 +1,27 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    .close {
+        font-size: 25px;
+        color: #fff;
+        float: right;
+        padding: 25px;
+    }
+    .conteiner {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        margin-top: 100px;
+        .content {
+            position: absolute;
+            top: 150px;
+            right: 0;
+            left: 0;
+        }
+    }
+}
+  

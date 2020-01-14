@@ -1,0 +1,25 @@
+.pagination {
+	color: #eee;
+	font-size: 18px;
+	padding: 15px 25px 20px;
+
+	.item {
+		padding: 6px 9px;
+		cursor: pointer;
+
+		&.active {
+			color: #0f0;
+			background-color: #fff;
+		}
+
+	}
+
+	.action {
+		cursor: pointer;
+	}
+
+	.dots {
+		padding: 0 3px;
+		cursor: pointer;
+	}
+}

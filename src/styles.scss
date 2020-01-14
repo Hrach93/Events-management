@@ -111,9 +111,15 @@ img {
 }
 
 .btn-link {
-  background: none;
-  padding: 0;
+  background-color: #0500dc;
+  border-radius: 5px;
+  padding: 2px 4px;
+  color: #fff;
   margin: 0;
+}
+
+.btn-delete {
+  background-color: #dc3545;
 }
 
 .btn-block {

@@ -1,23 +1,18 @@
 import { NgModule } from '@angular/core';
-import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
-import {MainLayoutComponent} from './shared/components/main-layout/main-layout.component';
-import {EventPageComponent} from './event-page/event-page.component';
-
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '', component: MainLayoutComponent, children: [
-      {path: '', redirectTo: '/', pathMatch: 'full'},
-      {path: 'event/:id', component: EventPageComponent}
-    ]
+    path: '',
+    loadChildren: './modules/user/user.module#AuthModule'
   },
   {
-    path: 'user', loadChildren: './admin/admin.module#AdminModule'
-  }
+    path: 'auth', loadChildren: './modules/auth/auth.module#AuthModule'
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{
+  imports: [RouterModule.forRoot(routes, {
     preloadingStrategy: PreloadAllModules
   })],
   exports: [RouterModule]
