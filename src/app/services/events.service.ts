@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
 import { CommonService } from './common.service';
+import { tap } from 'rxjs/operators';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class EventsService extends CommonService {
 
   public createEvent(event) {
     return this.post('events', event);
   }
 
-  public getAll(page = 1, limit = 10) {
+  public getAll(page, limit) {
     return this.get(`events?_page=${page}&limit=${limit}`);
   }
 
   public getTypes() {
     return this.get('eventTypes');
+  }
+
+  public uploadImage(id: number, imgData) {
+    return this.post('image-upload/' + id, imgData);
   }
 
   public editEvent(id: number, data) {

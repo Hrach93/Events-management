@@ -1,5 +1,4 @@
 import { Input, Component, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'app-pagination',
@@ -11,7 +10,6 @@ export class PaginationComponent implements OnInit, OnChanges {
     @Input() totalItems: number;
     @Input() perPageItems: number;
     @Input() currentPage: number;
-    @Input() isQueryParam = true;
     @Output() onClick: EventEmitter<number> = new EventEmitter<number>();
 
     public totalPages: number;
@@ -20,12 +18,10 @@ export class PaginationComponent implements OnInit, OnChanges {
     public pagesStartIndex = 0;
     public totalPagesArr: number[] = [];
 
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-    ) { }
+    constructor() { }
 
-    ngOnInit() {}
+    ngOnInit() {
+    }
 
     ngOnChanges(changes) {
         this.calculatePages();
@@ -40,19 +36,9 @@ export class PaginationComponent implements OnInit, OnChanges {
         this.setSliceIndex();
     }
 
-    private setQueryParam(): void {
-        const params = {
-            page: this.currentPage,
-        };
-        if (this.isQueryParam) {
-            this.router.navigate([], { queryParams: params, queryParamsHandling: 'merge'});
-        }
-    }
-
     public setPage(page: number): void {
         this.currentPage = page;
         this.setSliceIndex();
-        this.setQueryParam();
         this.onClick.emit(page);
     }
 
@@ -87,7 +73,6 @@ export class PaginationComponent implements OnInit, OnChanges {
         if (this.currentPage === this.totalPages) { return; }
         this.currentPage++;
         this.setSliceIndex();
-        this.setQueryParam();
         this.onClick.emit(this.currentPage);
     }
 
@@ -95,7 +80,6 @@ export class PaginationComponent implements OnInit, OnChanges {
         if (this.currentPage === 1) { return; }
         this.currentPage--;
         this.setSliceIndex();
-        this.setQueryParam();
         this.onClick.emit(this.currentPage);
     }
 }

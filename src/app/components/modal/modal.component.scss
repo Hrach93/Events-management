@@ -10,12 +10,13 @@
         color: #fff;
         float: right;
         padding: 25px;
+        cursor: pointer;
     }
-    .conteiner {
+    .container {
         position: relative;
         height: 100%;
         width: 100%;
-        margin-top: 100px;
+        //margin-top: 100px;
         .content {
             position: absolute;
             top: 150px;
@@ -24,4 +25,3 @@
         }
     }
 }
-  

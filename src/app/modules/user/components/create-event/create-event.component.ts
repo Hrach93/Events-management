@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { EventsType, Event } from '../../../../interfaces/interfaces';
 import { EventsService } from '../../../../services/events.service';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ export class CreateEventComponent implements OnInit {
 
   public form: FormGroup;
   public selected: string;
+  public fileToUpload: File;
   public types: EventsType[];
   @Input() editMode = false;
   @Input() eventData: Event;
@@ -27,8 +28,8 @@ export class CreateEventComponent implements OnInit {
   ngOnInit() {
     this.editMode || this.initForm();
     this.editMode && this.initForm(this.eventData);
-    this.eventsService.getTypes().subscribe((types: EventsType[]) => {
-      this.types = types;
+    this.eventsService.getTypes().subscribe(types => {
+      this.types = types['body'];
     });
   }
 
@@ -47,17 +48,29 @@ export class CreateEventComponent implements OnInit {
     this.selected = val;
   }
 
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
   submit() {
     if (this.form.invalid) {
       return;
     }
+    console.log(this.form.value, 'xxxxxxxxxxx');
+
     if (this.editMode) {
       return this.eventsService.editEvent(this.eventData.id, this.form.value).subscribe(res => {
         this.edited.emit();
       });
     }
-    this.eventsService.createEvent(this.form.value).subscribe(() => {
-      this.router.navigate(['']);
+    this.eventsService.createEvent(this.form.value).subscribe((res) => {
+      if (this.fileToUpload) {
+        const formData: FormData = new FormData();
+        formData.append('image', this.fileToUpload, this.fileToUpload.name);
+        this.eventsService.uploadImage(res['body'].id, formData).subscribe(res => {
+          this.router.navigate(['']);
+        });
+      } else  this.router.navigate(['']);
     });
   }
 }

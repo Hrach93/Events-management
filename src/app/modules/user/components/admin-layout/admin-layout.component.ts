@@ -8,16 +8,21 @@ import { AuthService } from '../../../../services/auth.service';
   styleUrls: ['./admin-layout.component.scss']
 })
 export class AdminLayoutComponent implements OnInit {
+
+  public user = JSON.parse(localStorage.getItem('user'));
+  public fullName = this.user ? this.user.name + ' ' + this.user.srName : 'Events Management';
+  public isAdminUser: boolean;
+
   constructor(
     private router: Router,
     public auth: AuthService,
   ) { }
-  user = JSON.parse(localStorage.getItem('user'));
-  fullName = this.user ? this.user.name + ' ' + this.user.srName : 'Events Management';
+
   ngOnInit() {
+    this.isAdminUser = JSON.parse(localStorage.getItem('user')).isAdmin;
   }
 
-  logout(event: Event) {
+  public logout(event: Event) {
     event.preventDefault();
     this.auth.logout();
     this.router.navigate(['/auth', 'login']);

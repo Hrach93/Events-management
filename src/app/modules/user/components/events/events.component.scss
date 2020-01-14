@@ -1,0 +1,36 @@
+.flex{
+    display: flex;
+    justify-content: end;
+    flex-wrap: wrap;
+    color: #fff;
+    .flex-item {
+        margin-top: 20px;
+        height: 250px;
+        width: 250px;
+        border-radius: 20px;
+        background-color: #999;
+        border: 1px solid #222;
+        margin-left: 20px;
+        .event-container {
+            position: relative;
+            height: 100%;
+            word-break: break-all;
+            padding: 15px;
+            .title {
+                font-size: 20px;
+            }
+            .description {
+                font-size: 15px;
+                margin-top: 15px;
+            }
+            .bottom {
+                position: absolute;
+                bottom: 20px;
+                margin-left: 5px;
+                .type {
+                    margin-left: 30px;
+                }
+            }
+        }
+    }
+}

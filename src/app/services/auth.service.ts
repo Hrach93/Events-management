@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../interfaces/interfaces';
+import { CommonService } from './common.service';
 
-@Injectable()
-export class AuthService {
+@Injectable({providedIn: 'root'})
+export class AuthService extends CommonService {
 
   public error$: Subject<string> = new Subject<string>();
-
-  constructor(private http: HttpClient) {}
+  public isAdmin = false;
 
   get token(): string {
     return localStorage.getItem('T-token');
@@ -17,7 +17,7 @@ export class AuthService {
 
   login(user: User): Observable<any> {
     user.returnSecureToken = true;
-    return this.http.post('https://volo-test.herokuapp.com/login', user)
+    return this.post('login', user)
       .pipe(
         tap(this.setToken),
         catchError(this.handleError.bind(this))
@@ -25,30 +25,24 @@ export class AuthService {
   }
 
   logout() {
-    this.setToken(null);
+    localStorage.clear();
   }
 
   isAuthenticated(): boolean {
     return !!this.token;
   }
 
-  private handleError(error: HttpErrorResponse){
+  private handleError(error: HttpErrorResponse) {
     const {message} = error.error;
-    console.log(message);
     this.error$.next(message);
     return throwError(error);
   }
 
   private setToken(response) {
+    response = response && response['body'];
     if (response) {
       localStorage.setItem('T-token', response.token);
-      const {user} = response;
-      localStorage.setItem('user', JSON.stringify({
-        name: user.name,
-        srName: user.srName,
-        isAdmin: user.isAdmin
-      }));
-      console.log('response', response);
+      localStorage.setItem('user', JSON.stringify(response.user));
     } else {
       localStorage.clear();
     }

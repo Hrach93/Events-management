@@ -6,6 +6,7 @@ import { AdminLayoutComponent } from './components/admin-layout/admin-layout.com
 import { CreateEventComponent } from './components/create-event/create-event.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { EventsService } from '../../services/events.service';
 
 const routes: Routes = [
   {
@@ -37,7 +38,7 @@ const routes: Routes = [
       RouterModule.forChild(routes)
     ],
     exports: [],
-    providers: [],
+    providers: [EventsService],
     bootstrap: []
   })
 export class AuthModule { }

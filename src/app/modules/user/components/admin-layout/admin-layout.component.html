@@ -3,10 +3,10 @@
     <a>{{fullName}}</a>
   </h1>
   <ul *ngIf="auth.isAuthenticated()">
-    <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <li routerLinkActive="active" *ngIf="isAdminUser" [routerLinkActiveOptions]="{ exact: true }">
       <a [routerLink]="['']">Events</a>
     </li>
-    <li routerLinkActive="active">
+    <li routerLinkActive="active" *ngIf="isAdminUser">
       <a [routerLink]="['/events', 'create']">Create Event</a>
     </li>
     <li>

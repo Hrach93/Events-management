@@ -1,34 +1,62 @@
 <div *ngIf="events.length; else loading">
-  <table>
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>Event Name</th>
-      <th>Event Description</th>
-      <th>Date</th>
-      <th>Event Type</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let event of events">
-      <td>{{event.id}}</td>
-      <td>{{event.name}}</td>
-      <td>{{event.description}}</td>
-      <td>{{event.date | date: 'medium'}}</td>
-      <td>{{types[event.eventType - 1].type}}</td>
-      <td>
-        <button class="btn btn-link" (click)="edit(event)">Edit</button>
-        <button class="btn btn-link btn-delete" (click)="delete(event)">Delete</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+
+  <div *ngIf="isAdminUser">
+    <table>
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Event Name</th>
+        <th>Event Description</th>
+        <th>Date</th>
+        <th>Event Type</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let event of events; let i = index">
+        <td>{{event.id}}</td>
+        <td>{{event.name}}</td>
+        <td>{{event.description}}</td>
+        <td>{{event.date | date: 'mediumDate'}}</td>
+        <td>{{types[event.eventType - 1].type}}</td>
+        <td>
+          <button class="btn btn-link" (click)="edit(event)">Edit</button>
+          <button class="btn btn-link btn-delete" (click)="delete(event, i)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <app-pagination
+      (onClick)="pageChange($event)"
+      [totalItems]="totalItems"
+      [totalItems]="currentPage"
+      [perPageItems]="perPageItems">
+
+    </app-pagination>
+    <app-modal *ngIf="openModal" (closeEvent)="closeModal()">
+      <app-create-event (edited)="edited($event)" [eventData]="eventData" [editMode]="true"></app-create-event>
+    </app-modal>
+  </div>
+
+  <div *ngIf="!isAdminUser">
+    <div class="flex">
+      <div class="flex-item" *ngFor="let event of events; let i = index">
+        <div class="event-container" [style.backgroundImage]="'url(' + imageURL + '/' + event.image +')'">
+          <div class="title">{{event.name}}</div>
+          <div class="description">{{event.description}} {{event.image}}</div>
+          <div class="bottom">
+            <span>
+                {{event.date | date: 'mediumDate'}}
+            </span>
+            <span class="type">
+                {{types[event.eventType - 1].type}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<app-pagination></app-pagination>
-<app-modal *ngIf="openModal" (closeEvent)="closeModal()">
-  <app-create-event (edited)="edited($event)" [eventData]="eventData" [editMode]="true"></app-create-event>
-</app-modal>
 <ng-template #loading>
   <p class="text-center">Loading . . .</p>
 </ng-template>

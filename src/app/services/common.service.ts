@@ -4,15 +4,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({providedIn: 'root'})
 export class CommonService {
 
-  private headers = {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('T-token')
-    }
+  protected headers = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('T-token')
+    }),
+    observe: 'response' as 'body'
   };
 
   private hostName = 'https://volo-test.herokuapp.com/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   public get(url: string) {
     return this.http.get(`${this.hostName}${url}`, this.headers);
