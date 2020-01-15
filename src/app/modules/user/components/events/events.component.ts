@@ -10,7 +10,7 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class EventsComponent implements OnInit {
 
-  public events: Event[] = [];
+  public events: Event[];
   public types: EventsType[];
   public openModal = false;
   public eventData: Event;

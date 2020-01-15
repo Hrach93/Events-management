@@ -1,6 +1,6 @@
 <nav class="navbar bg-primary">
   <h1>
-    <a>{{fullName}}</a>
+    {{fullName}}
   </h1>
   <ul *ngIf="auth.isAuthenticated()">
     <li routerLinkActive="active" *ngIf="isAdminUser" [routerLinkActiveOptions]="{ exact: true }">

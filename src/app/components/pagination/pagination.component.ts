@@ -53,23 +53,7 @@ export class PaginationComponent implements OnInit, OnChanges {
         }
     }
 
-    public prevDots(): void {
-        const currentPage = this.currentPage - this.dotsStep;
-        if (currentPage < 0) {
-            return this.setPage(0);
-        }
-        this.setPage(currentPage);
-    }
-
-    public nextDots(): void {
-        const currentPage = this.currentPage + this.dotsStep;
-        if (currentPage > this.totalPages) {
-            return this.setPage(currentPage);
-        }
-        this.setPage(currentPage);
-    }
-
-    public nextPage(): void {
+     public nextPage(): void {
         if (this.currentPage === this.totalPages) { return; }
         this.currentPage++;
         this.setSliceIndex();

@@ -15,6 +15,7 @@ export class CreateEventComponent implements OnInit {
   public selected: string;
   public fileToUpload: File;
   public types: EventsType[];
+  private date = Date.now()
   @Input() editMode = false;
   @Input() eventData: Event;
   @Output() edited: EventEmitter<any> = new EventEmitter();
@@ -70,7 +71,7 @@ export class CreateEventComponent implements OnInit {
         this.eventsService.uploadImage(res['body'].id, formData).subscribe(res => {
           this.router.navigate(['']);
         });
-      } else  this.router.navigate(['']);
+      } else {  this.router.navigate(['']); }
     });
   }
 }

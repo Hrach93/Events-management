@@ -1,7 +1,7 @@
-<div *ngIf="events.length; else loading">
+<div *ngIf="events; else loading">
 
   <div *ngIf="isAdminUser">
-    <table>
+    <table *ngIf="events.length !== 0; else noEvent">
       <thead>
       <tr>
         <th>#</th>
@@ -16,7 +16,7 @@
       <tr *ngFor="let event of events; let i = index">
         <td>{{event.id}}</td>
         <td>{{event.name}}</td>
-        <td>{{event.description}}</td>
+        <td class="desc-break">{{event.description}}</td>
         <td>{{event.date | date: 'mediumDate'}}</td>
         <td>{{types[event.eventType - 1].type}}</td>
         <td>
@@ -26,6 +26,9 @@
       </tr>
       </tbody>
     </table>
+    <ng-template #noEvent>
+      <h2 class="text-center">There is no events, please create a new event</h2>
+    </ng-template>
     <app-pagination
       (onClick)="pageChange($event)"
       [totalItems]="totalItems"

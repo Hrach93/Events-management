@@ -1,5 +1,6 @@
 <form class="edit-create-form" [formGroup]="form" (ngSubmit)="submit()">
-  <h1>Create new event</h1>
+  <h1 *ngIf="!editMode">Create new event</h1>
+  <h1 *ngIf="editMode">Edit event</h1>
 
   <div
     class="form-control"
@@ -14,10 +15,10 @@
         Event name is required
       </small>
       <small *ngIf="form.get('name').errors.minlength">
-        Event name must be minimum 3
+        Event name minimum length must be  3
       </small>
       <small *ngIf="form.get('name').errors.maxlength">
-        Event name must be maximum 12
+        Event name maximum length must be 12
       </small>
     </div>
   </div>
@@ -41,7 +42,7 @@
     class="form-control"
     [ngClass]="{invalid: form.get('date').touched && form.get('date').invalid}">
     <label for="date">Event Date</label>
-    <input id="date" type="date" [ngModel] ="form.get('date').value | date:'yyyy-MM-dd'" formControlName="date">
+    <input id="date" type="date"  min="{{date| date:'yyyy-MM-dd'}}"[ngModel] ="form.get('date').value | date:'yyyy-MM-dd'" formControlName="date">
     <div
       *ngIf="form.get('date').touched && form.get('date').invalid"
       class="validation">
@@ -62,10 +63,10 @@
         Event description is required
       </small>
       <small *ngIf="form.get('description').errors.minlength">
-        Event description must be minimum 30
+        Event description minimum length must be 30
       </small>
       <small *ngIf="form.get('description').errors.maxlength">
-        Event description must be maximum 12
+        Event description maximum length must be 100
       </small>
     </div>
   </div>
@@ -74,7 +75,7 @@
     type="submit"
     class="btn btn-block btn-dark"
     [disabled]="form.invalid">
-    <span *ngIf="!editMode">Creat</span>
+    <span *ngIf="!editMode">Create</span>
     <span *ngIf="editMode">Save</span>
   </button>
 </form>
