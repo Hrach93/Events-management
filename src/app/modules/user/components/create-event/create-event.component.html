@@ -7,7 +7,7 @@
     [ngClass]="{invalid: form.get('name').touched && form.get('name').invalid}"
   >
     <label for="title">Event name</label>
-    <input id="title" type="text" formControlName="name">
+    <input id="title" type="text" formControlName="name" [attr.disabled] = "editMode  ? 'disabled' : null">
     <div
       *ngIf="form.get('name').touched && form.get('name').invalid"
       class="validation">
@@ -27,7 +27,7 @@
     class="form-control"
     [ngClass]="{invalid: form.get('eventType').touched && form.get('eventType').invalid}">
     <label for="type">Event type</label>
-    <select formControlName="eventType" id="type" [(ngModel)]="selected" (ngModelChange)='onOptionsSelected($event)'>
+    <select formControlName="eventType" id="type" [(ngModel)]="selected" (ngModelChange)='onOptionsSelected($event)' [attr.disabled] = "editMode  ? 'disabled' : null">
       <option *ngFor="let type of types" [value]="type.value">{{type.type}} </option>
     </select>
     <div
